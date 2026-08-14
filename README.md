@@ -91,17 +91,10 @@ The project is organized into notebooks and data files covering the main stages 
 titanic_project/
 │
 ├── data/
-│   ├── gender_submission.csv
-│   ├── kaggle.csv
-│   ├── train.csv
-│   ├── test.csv
-│   ├── titanic_train.csv
-│   └── titanic_test.csv
-│
-├── notebooks/
-│   ├── descriptive_analysis
-│   └── model
-│
+├── titanic_project/
+│   ├── descriptive_analysis.ipynb
+│   └── model.ipynb
+├── .gitignore
 └── README.md
 ```
 
