@@ -1,55 +1,153 @@
-### About the Titanic
+# Titanic Survival Prediction
 
-The sinking of the Titanic was one of the best-known maritime accidents in human history.
-On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren’t enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.
+## About the Titanic
 
-In this project we will explore the kaggle's data (https://www.kaggle.com/c/titanic) and we will to build a predictive model that answers the question: “what sorts of people were more likely to survive?” using passenger data (ie name, age, gender, socio-economic class, etc).
+The sinking of the Titanic is one of the most well-known maritime disasters in history.
 
-The objective is not be part of kaggle's challenge but study some models for binary classification.
+On April 15, 1912, during her maiden voyage, the RMS Titanic sank after colliding with an iceberg. There were not enough lifeboats for everyone on board, and approximately 1,500 people lost their lives.
 
-### About the documents of project
-This project was developed with the help of the poetry package manager. 
-To use it, you need to install poetry on your machine and, once installed, download the project. 
-At the link https://python-poetry.org/docs/basic-usage/ it is possible to understand how the package manager works.
-Instead of creating a new project, Poetry can be used to 'initialize' a pre-populated directory. 
-To interactively create a pyproject.toml file in the pre-existing-project directory:
+This project uses the well-known **Titanic dataset** to explore the factors associated with passenger survival and to develop and compare different **binary classification models**.
 
-```bash
-cd pre-existing-project
-poetry init
+The project is inspired by the [Titanic competition on Kaggle](https://www.kaggle.com/c/titanic). However, the objective of this project is **not to compete in the Kaggle challenge**, but rather to use the dataset as a practical case study for learning and experimenting with machine learning classification techniques.
+
+## Project Objectives
+
+The main objectives of this project are:
+
+* Explore and perform descriptive analysis of the Titanic dataset.
+* Identify variables that may be relevant for predicting passenger survival.
+* Perform data preprocessing and handle missing values.
+* Transform categorical variables into dummy variables.
+* Analyze correlations between features and identify potentially redundant variables.
+* Compare different binary classification algorithms.
+* Evaluate model performance using Accuracy, F1-Score, and ROC AUC.
+* Select a promising model for further optimization.
+* Perform hyperparameter tuning using cross-validation.
+* Generate predictions for the Kaggle test dataset.
+
+## Data Preprocessing
+
+The dataset contains several passenger characteristics, including:
+
+* Passenger class (`Pclass`)
+* Sex (`Sex`)
+* Age (`Age`)
+* Number of siblings and spouses aboard (`SibSp`)
+* Fare (`Fare`)
+* Port of embarkation (`Embarked`)
+* Passenger title (`Title`)
+
+During the preprocessing stage, missing values were investigated and treated according to the characteristics of each variable.
+
+For example, missing `Age` values were imputed using the mean age of passengers within the corresponding passenger class. Missing `Fare` values were handled using the mean fare for third-class passengers, while missing `Embarked` values were replaced with the most frequent embarkation port.
+
+The `Title` variable was also simplified by retaining the most frequent titles (`Mr`, `Miss`, `Mrs`, and `Master`) and grouping less frequent titles into a single `Person` category.
+
+Variables such as `Ticket` and `Cabin` were excluded from the final model because they were considered unsuitable for the modeling approach used in this project.
+
+## Classification Models
+
+Several classification algorithms were evaluated:
+
+* Logistic Regression
+* K-Nearest Neighbors (KNN)
+* Support Vector Machine (SVM)
+* Random Forest
+* Gradient Boosting
+* XGBoost
+* Multilayer Perceptron (MLP)
+
+The models were evaluated using cross-validation on the training data.
+
+The main evaluation metrics were:
+
+* **Accuracy** — proportion of correctly classified observations.
+* **F1-Score** — harmonic mean of precision and recall.
+* **ROC AUC** — measures the model's ability to discriminate between the two classes across different classification thresholds.
+
+## Model Selection
+
+Among the models evaluated, **Gradient Boosting and XGBoost achieved the strongest overall performance**.
+
+Gradient Boosting obtained the highest Accuracy and ROC AUC, while XGBoost achieved the highest F1-Score. Since the differences between the two models were relatively small, XGBoost was selected for further development based on its competitive predictive performance, its higher F1-Score, and its flexibility for hyperparameter optimization.
+
+XGBoost also provides useful features for controlling model complexity and overfitting, as well as computational optimizations and support for parallel processing.
+
+## Hyperparameter Tuning
+
+After selecting XGBoost, a grid search with 10-fold cross-validation was used to evaluate different combinations of:
+
+* `learning_rate`
+* `max_depth`
+* `n_estimators`
+
+The purpose of this stage was to identify a combination of hyperparameters capable of improving the model's predictive performance.
+
+## Project Structure
+
+The project is organized into notebooks and data files covering the main stages of the analysis:
+
+```text
+titanic_project/
+│
+├── data/
+│   ├── gender_submission.csv
+│   ├── kaggle.csv
+│   ├── train.csv
+│   ├── test.csv
+│   ├── titanic_train.csv
+│   └── titanic_test.csv
+│
+├── notebooks/
+│   ├── descriptive_analysis
+│   └── model
+│
+└── README.md
 ```
 
-The document ending in .lock has all the necessary packages in the version used to run the notebooks
-from the project. If you run notebooks with packages in different versions, the result may not be 
-what is observed in the project.
 
-Another possibility is to download the project and install the necessary libraries using pip install or 
-conda intall.
+## Technologies and Libraries
 
----------------------------------------------------------------------------------------------------------
-### Sobre o Titanic
+The project was developed in Python using common data science and machine learning libraries, including:
 
-O naufrágio do Titanic foi um dos acidentes marítimos mais conhecidos da história da humanidade.
-Em 15 de abril de 1912, durante sua viagem inaugural, o RMS Titanic, amplamente considerado “inafundável”, afundou após colidir com um iceberg. Infelizmente, não havia botes salva-vidas suficientes para todos a bordo, resultando na morte de 1.502 dos 2.224 passageiros e tripulantes.
+* Python
+* pandas
+* NumPy
+* Matplotlib
+* scikit-learn
+* XGBoost
+* Jupyter Notebook
 
-Neste projeto exploraremos os dados do kaggle (https://www.kaggle.com/c/titanic) e construiremos um modelo preditivo que responda à pergunta: “que tipos de pessoas tinham maior probabilidade de sobreviver?” usando dados de passageiros (ou seja, nome, idade, sexo, classe socioeconômica, etc.).
 
-O objetivo não é fazer parte do desafio do kaggle, mas estudar alguns modelos para classificação binária.
+The required libraries can be installed using `pip` or another Python environment/package management solution.
 
-### Sobre os documentos do projeto
-Este projeto foi desenvolvido com o auxílio do gerenciador de pacotes de poetry.
-Para utilizá-lo, é necessário instalar o Poetry em sua máquina e, depois de instalado, baixar o projeto.
-No link https://python-poetry.org/docs/basic-usage/ é possível entender como funciona o gerenciador de pacotes.
-Em vez de criar um novo projeto, o Poetry pode ser usado para 'inicializar' um diretório pré-preenchido.
-Para criar interativamente um arquivo pyproject.toml no diretório de projeto pré-existente:
+For example:
 
 ```bash
-cd pre-existing-project
-poetry init
+pip install pandas numpy matplotlib scikit-learn xgboost jupyter
 ```
 
-O documento com terminação .lock possui todos os pacotes necessários na versão utilizada para rodar os notebooks
-do projeto. Caso execute os notebooks com pacotes em versões diferentes, o resultado pode não ser o observado no projeto.
+## Kaggle Submission
 
-Outra possibilidade é baixar o projeto e instalar as bibliotecas necessárias usando pip install ou
-conda intall.
+Although participation in the Kaggle competition is not the primary objective of this project, the final stage generates a DataFrame containing `PassengerId` and the predicted `Survived` values in the format required for a Kaggle submission.
+
+This step is included as an additional practical exercise in generating predictions from a trained classification model and preparing the output for an external evaluation platform.
+
+## Purpose of the Project
+
+This project is primarily a **machine learning learning exercise**. The Titanic dataset was chosen because it provides a well-known and relatively accessible binary classification problem while still allowing experimentation with important concepts such as:
+
+* Exploratory data analysis
+* Missing value treatment
+* Feature engineering
+* Categorical variable encoding
+* Feature selection
+* Correlation analysis
+* Cross-validation
+* Model comparison
+* Evaluation metrics
+* Hyperparameter tuning
+* Ensemble learning
+* Model prediction
+
+The emphasis is therefore on understanding and applying the machine learning workflow rather than achieving a specific Kaggle ranking.
